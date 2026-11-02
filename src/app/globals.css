@@ -2,12 +2,20 @@
 
 :root {
   --tekst: #252525;
+  --alt-tekst: #f8f7ff;
   --button: #6d28d9;
   --hover: #a78bfa;
   --background: #f8f7ff;
   --foreground: #ec4899;
 }
 
+@theme inline {
+  --color-tekst: var(--tekst);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
 
 body {
   background: var(--background);
