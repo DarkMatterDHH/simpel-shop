@@ -18,10 +18,14 @@ const FetchData = async () => {
     <div className="grid grid-cols-3 gap-4">
       <aside>{/* Add left-column content here */}</aside>
 
-      <div className="col-span-2 grid grid-cols-2 gap-4">
+      <div className="col-span-2 grid grid-cols-2 gap-4 ">
         {products.products.map((product) => (
-          <article key={product.id} className="bg-background text-tekst">
+          <article
+            key={product.id}
+            className="text-tekst border-2 border-tekst rounded-xl p-4 flex flex-col items-center gap-4"
+          >
             <Image
+              className="rounded-xl bg-foreground"
               src={product.images[0]}
               alt={product.title}
               width={500}
