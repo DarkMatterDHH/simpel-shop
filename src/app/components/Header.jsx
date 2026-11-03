@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaCartShopping } from "react-icons/fa6";
 import { useCartStore } from "../(routes)/buy/component/Cart";
-
 export default function Header() {
   const [hasHydrated, setHasHydrated] = useState(false);
   const cart = useCartStore((state) => state.cart);
