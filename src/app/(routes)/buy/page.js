@@ -1,10 +1,14 @@
-import Image from "next/image";
-import Header from "/components/Header";
 
-export default function Home() {
+import Header from "../../components/Header";
+
+export default function BuyPage() {
   return (
     <>
-      <Header></Header>
+      <Header />
+
+      <main>
+        <h1>Din kurv</h1>
+      </main>
     </>
   );
 }
