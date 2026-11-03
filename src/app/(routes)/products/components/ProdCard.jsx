@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function ProdCard({ className = "" }) {
   return <FetchData className={className} />;
@@ -15,7 +16,7 @@ const FetchData = async ({ className }) => {
   const products = await response.json();
 
   return (
-    <div className={`grid grid-cols-2 gap-4 ${className}`}>
+    <Link className={`grid grid-cols-2 gap-4 ${className}`}>
       {products.products.map((product) => (
         <article
           key={product.id}
@@ -32,6 +33,6 @@ const FetchData = async ({ className }) => {
           <div>{product.brand}</div>
         </article>
       ))}
-    </div>
+    </Link>
   );
 };

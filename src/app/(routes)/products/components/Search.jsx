@@ -22,14 +22,14 @@ export default function Search() {
       </button>
 
       <div className="min-w-0 flex-1 rounded-full bg-white shadow-md ring-1 ring-black/10 focus-within:ring-2 focus-within:ring-coral">
-        <label htmlFor="breed-search" className="sr-only">
-          Søg efter hunderacer
+        <label htmlFor="brand-search" className="sr-only">
+          Søg efter Produkter
         </label>
         <input
-          id="breed-search"
+          id="brand-search"
           name="query"
           type="search"
-          placeholder="Søg efter hunderacer"
+          placeholder="Søg efter Produkter"
           className="w-full bg-transparent px-5 py-3 text-gray-800 outline-none placeholder:text-gray-400"
         />
       </div>
