@@ -16,7 +16,7 @@ export default async function Home({ searchParams }) {
         </aside>
         <section className="min-w-0 md:col-start-2" aria-label="Products">
           <Search query={query} />
-          <ProdCard query={query} />
+          <ProdCard query={query} searchParams={searchParams} />
         </section>
       </main>
     </>
