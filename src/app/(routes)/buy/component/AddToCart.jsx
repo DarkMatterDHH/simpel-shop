@@ -1,6 +1,6 @@
 "use client";
 
-import { useCartStore } from "../store/cartStore";
+import { useCartStore } from "./Cart";
 
 const AddToCart = ({ id, title, price, thumbnail, stock }) => {
   const addToCart = useCartStore((state) => state.addToCart);
