@@ -1,17 +1,17 @@
 import { HiMagnifyingGlass } from "react-icons/hi2";
 
-export default function Search() {
+export default function Search({ query = "" }) {
   return (
     <form
       role="search"
-      action="/"
+      action="/products"
       method="get"
-      className="mx-auto flex w-full max-w-xl items-center gap-3 px-4 py-4"
+      className="mb-6 flex w-full items-center gap-3"
     >
       <button
         type="submit"
         aria-label="Søg"
-        className="flex size-12 shrink-0 items-center justify-center rounded-full bg-coral text-white hover:bg-coral/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral"
+        className="flex size-12 shrink-0 items-center justify-center rounded-full bg-button text-white hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-button"
       >
         <HiMagnifyingGlass
           aria-hidden="true"
@@ -21,15 +21,16 @@ export default function Search() {
         />
       </button>
 
-      <div className="min-w-0 flex-1 rounded-full bg-white shadow-md ring-1 ring-black/10 focus-within:ring-2 focus-within:ring-coral">
-        <label htmlFor="breed-search" className="sr-only">
-          Søg efter hunderacer
+      <div className="min-w-0 flex-1 rounded-full bg-white shadow-md ring-1 ring-black/10 focus-within:ring-2 focus-within:ring-button">
+        <label htmlFor="brand-search" className="sr-only">
+          Søg efter Produkter
         </label>
         <input
-          id="breed-search"
+          id="brand-search"
           name="query"
           type="search"
-          placeholder="Søg efter hunderacer"
+          defaultValue={query}
+          placeholder="Søg efter Produkter"
           className="w-full bg-transparent px-5 py-3 text-gray-800 outline-none placeholder:text-gray-400"
         />
       </div>
