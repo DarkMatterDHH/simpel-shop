@@ -5,7 +5,10 @@ export default function Home() {
   return (
     <>
       <Header></Header>
-      <ProdCard></ProdCard>
+      <div className="grid grid-cols-3 gap-4">
+        <aside>{/* Add left-column content here */}</aside>
+        <ProdCard className="col-span-2"></ProdCard>
+      </div>
     </>
   );
 }
