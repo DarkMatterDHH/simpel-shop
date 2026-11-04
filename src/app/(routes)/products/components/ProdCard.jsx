@@ -1,16 +1,17 @@
-
 import Image from "next/image";
 import Link from "next/link";
 import AddToCart from "../../buy/component/AddToCart";
 
-export default function ProdCard({ query = "" }) {
-  return <FetchData query={query} />;
+export default function ProdCard({ query = "", category = "" }) {
+  return <FetchData query={query} category={category} />;
 }
 
-const FetchData = async ({ query }) => {
-  const endpoint = query
-    ? `https://dummyjson.com/products/search?q=${encodeURIComponent(query)}`
-    : "https://dummyjson.com/products";
+const FetchData = async ({ query, category }) => {
+  const endpoint = category
+    ? `https://dummyjson.com/products/category/${encodeURIComponent(category)}`
+    : query
+      ? `https://dummyjson.com/products/search?q=${encodeURIComponent(query)}`
+      : "https://dummyjson.com/products";
 
   const response = await fetch(endpoint);
 
@@ -19,7 +20,11 @@ const FetchData = async ({ query }) => {
   }
 
   const products = await response.json();
-  const items = products.products ?? [];
+  const items = (products.products ?? []).filter((product) => {
+    if (!category || !query) return true;
+    const searchableText = `${product.title} ${product.description} ${product.brand ?? ""}`;
+    return searchableText.toLowerCase().includes(query.toLowerCase());
+  });
 
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
@@ -44,13 +49,9 @@ const FetchData = async ({ query }) => {
               />
 
               <div className="text-center">
-                <h2 className="font-semibold">
-                  {product.title}
-                </h2>
+                <h2 className="font-semibold">{product.title}</h2>
 
-                <p className="text-sm text-tekst/70">
-                  {product.brand}
-                </p>
+                <p className="text-sm text-tekst/70">{product.brand}</p>
               </div>
             </Link>
 
@@ -66,7 +67,9 @@ const FetchData = async ({ query }) => {
         ))
       ) : (
         <p className="col-span-full py-8 text-center text-tekst/70">
-          Ingen produkter matcher “{query}”.
+          {category
+            ? `No products match “${query}” in this category.`
+            : `Ingen produkter matcher “${query}”.`}
         </p>
       )}
     </div>

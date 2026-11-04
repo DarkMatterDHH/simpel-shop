@@ -1,6 +1,6 @@
 import { HiMagnifyingGlass } from "react-icons/hi2";
 
-export default function Search({ query = "" }) {
+export default function Search({ query = "", category = "" }) {
   return (
     <form
       role="search"
@@ -33,6 +33,7 @@ export default function Search({ query = "" }) {
           placeholder="Søg efter Produkter"
           className="w-full bg-transparent px-5 py-3 text-gray-800 outline-none placeholder:text-gray-400"
         />
+        {category && <input type="hidden" name="category" value={category} />}
       </div>
     </form>
   );
