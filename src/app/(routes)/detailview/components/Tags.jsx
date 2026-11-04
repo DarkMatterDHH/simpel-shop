@@ -4,7 +4,7 @@ const Tags = ({ tags }) => {
       {tags.map((tag, index) => (
         <span
           key={index}
-          className="inline-block rounded-full bg-primary/10 px-3 py-1 text-sm font-medium text-primary"
+          className="inline-block rounded-full bg-button/10 px-3 py-1 text-sm font-medium text-button"
         >
           {tag}
         </span>
