@@ -7,6 +7,7 @@ import Tags from "./components/Tags";
 import Brand from "./components/Brand";
 import Stock from "./components/Stock";
 import Reviews from "./components/Reviews";
+import Rating from "./components/Rating";
 
 export default async function DetailView({ searchParams }) {
   const { id } = await searchParams;
@@ -74,6 +75,7 @@ export default async function DetailView({ searchParams }) {
       <Price price={price} discountPercentage={discountPercentage} />
       <Stock stock={stock} />
       <Reviews reviews={reviews} rating={rating} />
+      <Rating rating={rating} />
     </main>
   );
 }
