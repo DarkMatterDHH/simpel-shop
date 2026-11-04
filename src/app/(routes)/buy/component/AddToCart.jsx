@@ -57,7 +57,7 @@ const AddToCart = ({ id, title, price, thumbnail, stock }) => {
         onClick={decrease}
         disabled={quantity === 0}
         aria-label={`Fjern én ${title} fra kurven`}
-        className="text-3xl disabled:opacity-30"
+        className="text-3xl text-button transition-colors hover:text-hover disabled:opacity-30"
       >
         <FiMinusCircle />
       </button>
@@ -69,7 +69,7 @@ const AddToCart = ({ id, title, price, thumbnail, stock }) => {
         onClick={increase}
         disabled={quantity >= stock}
         aria-label={`Tilføj én ${title} til kurven`}
-        className="text-3xl disabled:opacity-30"
+        className="text-3xl text-button transition-colors hover:text-hover disabled:opacity-30"
       >
         <FiPlusCircle />
       </button>

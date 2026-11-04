@@ -60,7 +60,7 @@ export default async function DetailView({ searchParams }) {
       <Header />
       <Link
         href="/products"
-        className="mb-6 inline-flex items-center gap-2 bg-neutral-200 px-4 py-2 text-sm font-medium transition hover:bg-neutral-300"
+        className="mb-6 inline-flex items-center gap-2 rounded-lg bg-foreground px-4 py-2 text-sm font-medium text-tekst transition-colors hover:bg-hover"
       >
         <MdArrowBackIosNew aria-hidden="true" size={14} />
         Navigering
@@ -69,7 +69,7 @@ export default async function DetailView({ searchParams }) {
       <div className="grid items-start gap-5 md:grid-cols-[minmax(0,2fr)_minmax(18rem,0.92fr)]">
         <section
           aria-label="Product image"
-          className="relative flex min-h-80 items-center justify-center overflow-hidden rounded-xl bg-neutral-100 p-6 md:min-h-[38rem]"
+          className="relative flex min-h-80 items-center justify-center overflow-hidden rounded-xl border border-foreground bg-background p-6 md:min-h-[38rem]"
         >
           {image ? (
             <Image
@@ -81,11 +81,11 @@ export default async function DetailView({ searchParams }) {
               priority
             />
           ) : (
-            <p className="text-neutral-500">Product image unavailable</p>
+            <p className="text-tekst/70">Product image unavailable</p>
           )}
         </section>
 
-        <aside className="flex min-h-80 flex-col rounded-xl bg-neutral-100 p-5 sm:p-6 md:min-h-[38rem]">
+        <aside className="flex min-h-80 flex-col rounded-xl bg-foreground p-5 text-tekst sm:p-6 md:min-h-[38rem]">
           <section aria-labelledby="product-information">
             <h1 id="product-information" className="mb-4 text-2xl font-bold">
               Information
@@ -106,7 +106,7 @@ export default async function DetailView({ searchParams }) {
 
           <section
             aria-labelledby="product-reviews"
-            className="mt-6 border-t border-neutral-300 pt-5"
+            className="mt-6 border-t border-tekst/20 pt-5"
           >
             <h2 id="product-reviews" className="mb-2 text-lg font-semibold">
               Reviews
@@ -116,13 +116,13 @@ export default async function DetailView({ searchParams }) {
               {reviews.length > 0 ? (
                 <Reviews reviews={reviews} />
               ) : (
-                <p className="text-sm text-neutral-600">No reviews yet.</p>
+                <p className="text-sm text-tekst/70">No reviews yet.</p>
               )}
             </div>
           </section>
 
           <section
-            className="mt-auto border-t border-neutral-300 pt-5"
+            className="mt-auto border-t border-tekst/20 pt-5"
             aria-label="Add to cart"
           >
             <p className="mb-3 font-semibold">Add to cart</p>

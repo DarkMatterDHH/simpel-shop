@@ -6,9 +6,9 @@ const Price = ({ price, discountPercentage }) => {
       <p className="text-lg font-semibold text-tekst">
         {hasValidPrice ? `Price: $${price}` : "Price not available"}
       </p>
-      <p className="text-sm text-muted-foreground">
+      <p className="text-sm text-tekst/70">
         {discountPercentage && (
-          <span className="text-lg font-bold text-red-500">
+          <span className="text-lg font-bold text-button">
             Save {discountPercentage}%
           </span>
         )}
