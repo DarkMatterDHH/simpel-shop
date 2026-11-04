@@ -1,8 +1,8 @@
-
 "use client";
 
 import { FiPlusCircle, FiMinusCircle } from "react-icons/fi";
 import { useCartStore } from "./Cart";
+import { useEffect, useState } from "react";
 
 const AddToCart = ({ id, title, price, thumbnail, stock }) => {
   const cart = useCartStore((state) => state.cart);
@@ -18,16 +18,26 @@ const AddToCart = ({ id, title, price, thumbnail, stock }) => {
     stock,
   };
 
+  const [hasHydrated, setHasHydrated] = useState(false);
+
+  useEffect(() => {
+    setHasHydrated(true);
+  }, []);
   // Find produktet i kurven
   const cartProduct = cart.find((item) => item.id === id);
 
   // Antal produkter i kurven
-  const quantity = cartProduct?.quantity || 0;
-
+  const quantity = hasHydrated ? (cartProduct?.quantity ?? 0) : 0;
   // Tilføj ét produkt
   const increase = () => {
     if (quantity < stock) {
       addToCart(product);
+      console.log({
+        id,
+        stock,
+        quantity,
+        cart,
+      });
     }
   };
 
@@ -52,9 +62,7 @@ const AddToCart = ({ id, title, price, thumbnail, stock }) => {
         <FiMinusCircle />
       </button>
 
-      <span className="text-lg font-semibold">
-        {quantity}
-      </span>
+      <span className="text-lg font-semibold">{quantity}</span>
 
       <button
         type="button"
