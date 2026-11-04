@@ -102,11 +102,10 @@ export default function CartOverview() {
             <span>${total.toFixed(2)}</span>
             <div className="mt-4 flex items-center gap-3">
               <FaRegCreditCard
-                size={24}
+                size={32}
                 className="text-[#6D28D9]"
                 aria-hidden="true"
               />
-              <span className="text-sm">Sikker betaling (demo)</span>
             </div>
             <Link
               href="/confirm"
