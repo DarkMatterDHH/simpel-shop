@@ -1,19 +1,15 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useCartStore } from "./Cart";
 
 export default function CartOverview() {
   const [hasHydrated, setHasHydrated] = useState(false);
 
-  // Hent data fra Zustand
   const cart = useCartStore((state) => state.cart);
-  const removeFromCart = useCartStore(
-    (state) => state.removeFromCart
-  );
-  const updateQuantity = useCartStore(
-    (state) => state.updateQuantity
-  );
+  const removeFromCart = useCartStore((state) => state.removeFromCart);
+  const updateQuantity = useCartStore((state) => state.updateQuantity);
 
   useEffect(() => {
     setHasHydrated(true);
@@ -23,81 +19,96 @@ export default function CartOverview() {
     return <p>Indlæser kurv...</p>;
   }
 
-  // Beregn samlet pris
-  const total = cart.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  );
+  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   return (
-    <div className="grid gap-8 md:grid-cols-3">
-
-      {/* VENSTRE SIDE - PRODUKTER */}
-      <section className="md:col-span-2">
-        <h2>Produkter i kurven</h2>
+    <div className="mx-auto grid w-full max-w-5xl grid-cols-1 gap-6 md:grid-cols-[2fr_1fr]">
+      {/* VENSTRE - INDHOLD AF KURV */}
+      <section className="min-h-80 rounded-xl bg-white p-6 text-[#111111] shadow-sm">
+        <h2 className="mb-6 text-xl font-semibold">Indhold af kurv</h2>
 
         {cart.length === 0 ? (
           <p>Din kurv er tom.</p>
         ) : (
-          cart.map((product) => (
-            <div key={product.id} className="border-b p-4">
-
-              {/* Produktinformation */}
-              <img
-                src={product.thumbnail}
-                alt={product.title}
-                width={100}
-              />
-
-              <h3>{product.title}</h3>
-
-              <p>Pris: ${product.price}</p>
-
-              {/* Antal */}
-              <input
-                type="number"
-                min="1"
-                value={product.quantity}
-                onChange={(e) => {
-                  const quantity = Number(e.target.value);
-
-                  if (Number.isInteger(quantity) && quantity >= 1) {
-                    updateQuantity(product.id, quantity);
-                  }
-                }}
-                className="w-16 border p-1"
-              />
-
-              {/* Fjern produkt */}
-              <button
-                type="button"
-                onClick={() => removeFromCart(product.id)}
+          <div className="space-y-4">
+            {cart.map((product) => (
+              <article
+                key={product.id}
+                className="flex flex-wrap items-center gap-4 rounded-lg bg-white p-4"
               >
-                Fjern
-              </button>
+                <img
+                  src={product.thumbnail}
+                  alt={product.title}
+                  className="h-24 w-24 object-contain"
+                />
 
-            </div>
-          ))
+                <div className="min-w-0 flex-1">
+                  <h3 className="font-semibold">{product.title}</h3>
+
+                  <p className="mt-1">${product.price}</p>
+
+                  <div className="mt-3 flex items-center gap-4">
+                    <input
+                      type="number"
+                      min="1"
+                      value={product.quantity}
+                      onChange={(e) => {
+                        const quantity = Number(e.target.value);
+
+                        if (Number.isInteger(quantity) && quantity >= 1) {
+                          updateQuantity(product.id, quantity);
+                        }
+                      }}
+                      aria-label={`Antal af ${product.title}`}
+                      className="w-16 rounded border border-gray-300 p-1"
+                    />
+
+                    <button
+                      type="button"
+                      onClick={() => removeFromCart(product.id)}
+                      className="text-sm text-red-600 hover:underline"
+                    >
+                      Fjern
+                    </button>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
         )}
       </section>
 
-      {/* HØJRE SIDE - ORDREOVERSIGT */}
-      <aside className="border p-4">
-        <h2>Ordreoversigt</h2>
+      {/* HØJRE - BETALINGSDETALJER */}
+      <aside className="min-h-80 rounded-xl bg-white p-6 text-[#111111] shadow-sm">
+        <h2 className="mb-6 font-family-name:var(--font-poppins) text-2xl font-bold">
+          Betalingsdetaljer
+        </h2>
+        <div className="space-y-4">
+          <div className="flex justify-between">
+            <span>Antal varer</span>
+            <span>{cart.reduce((sum, item) => sum + item.quantity, 0)}</span>
+          </div>
 
-        <p>Antal forskellige produkter: {cart.length}</p>
+          <div className="flex justify-between">
+            <span>Levering</span>
+            <span>Gratis</span>
+          </div>
 
-        <p>Levering: Gratis</p>
+          <hr className="border-gray-400" />
 
-        <h3>Total: ${total.toFixed(2)}</h3>
+          <div className="flex justify-between font-bold">
+            <span>Total</span>
+            <span>${total.toFixed(2)}</span>
+            <Link
+              href="/confirm"
+              className="mt-6 block rounded-xl bg-[#6D28D9] px-6 py-3 text-center font-semibold text-white transition hover:bg-[#5B21B6]"
+            >
+              Bekræft køb
+            </Link>
+          </div>
 
-        {/* Her kan du senere tilføje:
-            - Rabatkode
-            - Leveringsmetode
-            - Betalingsknap
-            - Flere ordreoplysninger
-        */}
-
+          {/* Betalingsknap tilføjes senere */}
+        </div>
       </aside>
     </div>
   );

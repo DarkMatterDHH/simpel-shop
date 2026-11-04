@@ -9,16 +9,17 @@ export const useCartStore = create(
       // Tilføj et produkt til kurven
       addToCart: (product) =>
         set((state) => {
-          const exists = state.cart.find(
-            (item) => item.id === product.id
-          );
+          const exists = state.cart.find((item) => item.id === product.id);
 
           if (exists) {
             return {
               cart: state.cart.map((item) =>
                 item.id === product.id
-                  ? { ...item, quantity: item.quantity + 1 }
-                  : item
+                  ? {
+                      ...item,
+                      quantity: Math.min(item.quantity + 1, product.stock),
+                    }
+                  : item,
               ),
             };
           }
@@ -31,6 +32,7 @@ export const useCartStore = create(
                 title: product.title,
                 price: product.price,
                 thumbnail: product.thumbnail,
+                stock: product.stock,
                 quantity: 1,
               },
             ],
@@ -40,9 +42,7 @@ export const useCartStore = create(
       // Fjern et produkt fra kurven
       removeFromCart: (productId) =>
         set((state) => ({
-          cart: state.cart.filter(
-            (item) => item.id !== productId
-          ),
+          cart: state.cart.filter((item) => item.id !== productId),
         })),
 
       // Ændr antal
@@ -50,11 +50,13 @@ export const useCartStore = create(
         set((state) => ({
           cart: state.cart.map((item) =>
             item.id === productId
-              ? { ...item, quantity }
-              : item
+              ? {
+                  ...item,
+                  quantity: Math.max(1, Math.min(quantity, item.stock ?? 1)),
+                }
+              : item,
           ),
         })),
-
       // Tøm kurven
       clearCart: () => set({ cart: [] }),
     }),
@@ -65,12 +67,8 @@ export const useCartStore = create(
         ...(persistedState && typeof persistedState === "object"
           ? persistedState
           : {}),
-        cart: Array.isArray(persistedState?.cart)
-          ? persistedState.cart
-          : [],
-      })
-    }
-  )
+        cart: Array.isArray(persistedState?.cart) ? persistedState.cart : [],
+      }),
+    },
+  ),
 );
-
-
