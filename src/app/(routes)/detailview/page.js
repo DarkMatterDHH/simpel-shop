@@ -8,6 +8,8 @@ import Brand from "./components/Brand";
 import Stock from "./components/Stock";
 import Reviews from "./components/Reviews";
 import Rating from "./components/Rating";
+import { MdArrowBackIosNew } from "react-icons/md";
+import AddToCart from "../buy/component/AddToCart";
 
 export default async function DetailView({ searchParams }) {
   const { id } = await searchParams;
@@ -64,16 +66,26 @@ export default async function DetailView({ searchParams }) {
           priority
         />
         <Link
-          href="/"
+          href="/products"
           aria-label="Back to product list"
           className="absolute left-3 top-3 z-10 rounded-full bg-white/90 p-2 text-neutral-800 shadow-sm transition hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2"
-        ></Link>
+        >
+          <MdArrowBackIosNew aria-hidden="true" size={20} />
+        </Link>
       </div>
       <h2 className="mb-3 text-xl font-semibold">{brandName}</h2>
       <Tags tags={tags} />
       <Description description={description} />
       <Price price={price} discountPercentage={discountPercentage} />
       <Stock stock={stock} />
+      <AddToCart
+        id={id}
+        title={brandName}
+        price={price}
+        thumbnail={image}
+        stock={stock}
+      />
+
       <Reviews reviews={reviews} rating={rating} />
       <Rating rating={rating} />
     </main>
