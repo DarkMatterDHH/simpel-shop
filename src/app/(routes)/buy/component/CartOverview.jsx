@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useCartStore } from "./Cart";
+import { FaRegCreditCard } from "react-icons/fa6";
 
 export default function CartOverview() {
   const [hasHydrated, setHasHydrated] = useState(false);
@@ -99,6 +100,14 @@ export default function CartOverview() {
           <div className="flex justify-between font-bold">
             <span>Total</span>
             <span>${total.toFixed(2)}</span>
+            <div className="mt-4 flex items-center gap-3">
+              <FaRegCreditCard
+                size={24}
+                className="text-[#6D28D9]"
+                aria-hidden="true"
+              />
+              <span className="text-sm">Sikker betaling (demo)</span>
+            </div>
             <Link
               href="/confirm"
               className="mt-6 block rounded-xl bg-[#6D28D9] px-6 py-3 text-center font-semibold text-white transition hover:bg-[#5B21B6]"
