@@ -36,7 +36,11 @@ export default async function DetailView({ searchParams }) {
       if (response.ok) {
         const product = await response.json();
         brandName = product.title || brandName;
-        image = product.image?.url || image;
+        image =
+          product.thumbnail ||
+          product.images?.[0] ||
+          product.image?.url ||
+          image;
         description = product.description || "";
         price = product.price || "";
         rating = product.rating || "";
@@ -52,42 +56,86 @@ export default async function DetailView({ searchParams }) {
   }
 
   return (
-    <main className="mx-auto w-full max-w-2xl p-6 pb-28">
-      <Header> </Header>
-      <h1 className="mb-6 text-2xl font-bold">Product details</h1>
-      <Brand brand={brand} />
-      <div className="relative mb-6 overflow-hidden rounded-2xl">
-        <Image
-          src={image}
-          alt={`Photo of ${brandName}`}
-          width={800}
-          height={572}
-          className="aspect-[1.4] w-full object-cover"
-          priority
-        />
-        <Link
-          href="/products"
-          aria-label="Back to product list"
-          className="absolute left-3 top-3 z-10 rounded-full bg-white/90 p-2 text-neutral-800 shadow-sm transition hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2"
-        >
-          <MdArrowBackIosNew aria-hidden="true" size={20} />
-        </Link>
-      </div>
-      <h2 className="mb-3 text-xl font-semibold">{brandName}</h2>
-      <Tags tags={tags} />
-      <Description description={description} />
-      <Price price={price} discountPercentage={discountPercentage} />
-      <Stock stock={stock} />
-      <AddToCart
-        id={id}
-        title={brandName}
-        price={price}
-        thumbnail={image}
-        stock={stock}
-      />
+    <main className="mx-auto w-full max-w-7xl px-4 py-6 text-tekst sm:px-6 lg:px-8">
+      <Header />
+      <Link
+        href="/products"
+        className="mb-6 inline-flex items-center gap-2 bg-neutral-200 px-4 py-2 text-sm font-medium transition hover:bg-neutral-300"
+      >
+        <MdArrowBackIosNew aria-hidden="true" size={14} />
+        Navigering
+      </Link>
 
-      <Reviews reviews={reviews} rating={rating} />
-      <Rating rating={rating} />
+      <div className="grid items-start gap-5 md:grid-cols-[minmax(0,2fr)_minmax(18rem,0.92fr)]">
+        <section
+          aria-label="Product image"
+          className="relative flex min-h-80 items-center justify-center overflow-hidden rounded-xl bg-neutral-100 p-6 md:min-h-[38rem]"
+        >
+          {image ? (
+            <Image
+              src={image}
+              alt={`Photo of ${brandName}`}
+              width={1000}
+              height={800}
+              className="max-h-[34rem] w-full object-contain"
+              priority
+            />
+          ) : (
+            <p className="text-neutral-500">Product image unavailable</p>
+          )}
+        </section>
+
+        <aside className="flex min-h-80 flex-col rounded-xl bg-neutral-100 p-5 sm:p-6 md:min-h-[38rem]">
+          <section aria-labelledby="product-information">
+            <h1 id="product-information" className="mb-4 text-2xl font-bold">
+              Information
+            </h1>
+            <Brand brand={brand} />
+            <h2 className="mt-1 text-xl font-semibold">{brandName}</h2>
+            <div className="mt-3">
+              <Tags tags={tags} />
+            </div>
+            <div className="mt-4">
+              <Description description={description} />
+            </div>
+            <div className="mt-4 space-y-1">
+              <Price price={price} discountPercentage={discountPercentage} />
+              <Stock stock={stock} />
+            </div>
+          </section>
+
+          <section
+            aria-labelledby="product-reviews"
+            className="mt-6 border-t border-neutral-300 pt-5"
+          >
+            <h2 id="product-reviews" className="mb-2 text-lg font-semibold">
+              Reviews
+            </h2>
+            <Rating rating={rating} />
+            <div className="mt-3 max-h-40 space-y-3 overflow-y-auto">
+              {reviews.length > 0 ? (
+                <Reviews reviews={reviews} />
+              ) : (
+                <p className="text-sm text-neutral-600">No reviews yet.</p>
+              )}
+            </div>
+          </section>
+
+          <section
+            className="mt-auto border-t border-neutral-300 pt-5"
+            aria-label="Add to cart"
+          >
+            <p className="mb-3 font-semibold">Add to cart</p>
+            <AddToCart
+              id={id}
+              title={brandName}
+              price={price}
+              thumbnail={image}
+              stock={stock}
+            />
+          </section>
+        </aside>
+      </div>
     </main>
   );
 }
