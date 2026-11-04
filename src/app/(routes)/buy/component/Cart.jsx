@@ -9,6 +9,9 @@ export const useCartStore = create(
       // Tilføj et produkt til kurven
       addToCart: (product) =>
         set((state) => {
+          if (!Number.isFinite(product.stock) || product.stock <= 0) {
+            return state;
+          }
           const exists = state.cart.find((item) => item.id === product.id);
 
           if (exists) {
