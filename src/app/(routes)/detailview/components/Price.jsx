@@ -1,4 +1,4 @@
-const Price = (price) => {
+const Price = (price, discountPercentage) => {
   return (
     <>
       <p className="text-lg font-semibold text-tekst">
